@@ -4,3 +4,8 @@ DebugConfig/
 lab1.uvoptx
 lab1.uvguix.lis3
 lab1.uvguix.Yu
+.history/
+.vscode/
+build/
+.settings/
+STM32Make.make
