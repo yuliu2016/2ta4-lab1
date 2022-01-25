@@ -20,7 +20,7 @@ floatAbi: hard
 ldscript: STM32F429ZITX_FLASH.ld # linker script
 
 # Compiler definitions. The -D prefix for the compiler will be automatically added.
-cDefinitions: []
+cDefinitions:
   - DEBUG
   - USE_HAL_DRIVER
   - STM32F429xx
@@ -36,21 +36,14 @@ cxxDefinitionsFile:
 asDefinitionsFile:
 
 # Compiler flags
-cFlags: 
-  - -Wall
-  - -fdata-sections
-  - -ffunction-sections
+cFlags: []
 
 cxxFlags:
   - -feliminate-unused-debug-types
 
-assemblyFlags: 
-  - -Wall
-  - -fdata-sections
-  - -ffunction-sections
+assemblyFlags: []
 
 linkerFlags: []
-  - specs=nosys.specs
 
 # libraries to be included. The -l prefix to the library will be automatically added.
 libraries: 
@@ -75,10 +68,9 @@ excludes:
 
 # Include directories (directories containing .h or .hpp files)
 # If a CubeMX makefile is present it will automatically include the include directories from that makefile.
-includeDirectories: []
+includeDirectories:
 - Drivers/**
 - Inc/**
-- RTE/_Target_1/**
 
 # Files that should be included in the compilation.
 # If a CubeMX makefile is present it will automatically include the  c and cpp/cxx files from that makefile.
@@ -87,8 +79,10 @@ includeDirectories: []
 # these should be escaped with a: \ or the name should be in double quotes e.g. "HARDWARE_DRIVER*.c"
 sourceFiles:
 - Src/**
-- Drivers/**
-- RTE\Device\STM32F429ZITx\**
+- Drivers/BSP/**
+- Drivers/STM32F4xx_HAL_Driver/**
+- RTE/Device/STM32F429ZITx/system_stm32f4xx.c
+- RTE/Startup/**
 
 
 # When no makefile is present it will show a warning pop-up.

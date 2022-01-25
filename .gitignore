@@ -9,3 +9,5 @@ lab1.uvguix.Yu
 build/
 .settings/
 STM32Make.make
+Drivers/BSP/
+Drivers/CMSIS/
