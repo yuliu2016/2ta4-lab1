@@ -159,6 +159,9 @@ int main(void)
 	
 	
   /* Configure LED3 and LED4 */ 
+  BSP_LED_Init(LED3);
+
+
   BSP_LED_Init(LED4);
   BSP_LED_On(LED4);
 	   
@@ -279,7 +282,7 @@ void  TIM3_Config(void)
   ----------------------------------------------------------------------- */  
   
   /* Compute the prescaler value to have TIM3 counter clock equal to 10 KHz */
-  Tim3_PrescalerValue = (uint32_t) ((SystemCoreClock /2) / 10000) - 1;
+  Tim3_PrescalerValue = (uint32_t) ((SystemCoreClock /2) / 20000) - 1;
   
   /* Set TIM3 instance */
   Tim3_Handle.Instance = TIM3; //TIM3 is defined in stm32f429xx.h
@@ -389,7 +392,7 @@ void  TIM4_OC_Config(void)
 }
 	
 
-
+static int userPressed = 0;
 
 /**
   * @brief EXTI line detection callbacks
@@ -401,22 +404,45 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   if(GPIO_Pin == KEY_BUTTON_PIN)
   {
     /* Toggle LED4 */
-    //BSP_LED_Toggle(LED4);
+    // BSP_LED_On(LED4);
+    userPressed = 1;
 		
-		factor = (factor+1)%2;
+		// factor = (factor+1)%2;
 		//__HAL_TIM_SET_COMPARE(&Tim4_Handle, TIM_CHANNEL_1, Tim4_CCR/(factor+1));
-		__HAL_TIM_SET_PRESCALER(&Tim3_Handle, Tim3_PrescalerValue/(factor+1));  
+		// __HAL_TIM_SET_PRESCALER(&Tim3_Handle, Tim3_PrescalerValue/(factor+1));  
 		
   }
 }
 
+static int currentState;
 
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)   //see  stm32fxx_hal_tim.c for different callback function names. 
 																															//for timer 3 , Timer 3 use update event initerrupt
 {
-	if ((*htim).Instance==TIM3)    //since only one timer, this line is actually not needed
-		BSP_LED_Toggle(LED4);
+	if ((*htim).Instance==TIM3) {    //since only one timer, this line is actually not needed
+		if (userPressed) {
+      switch (currentState) {
+        case 0:
+          BSP_LED_On(LED3);
+          break;
+        case 1:
+          BSP_LED_Off(LED3);
+          break;
+        case 2:
+          BSP_LED_On(LED4);
+          break;
+        case 3:
+          BSP_LED_Off(LED4);
+      }
+      currentState++;
+      if (currentState == 4) {
+        currentState = 0;
+      }
+    } else {
+      BSP_LED_Toggle(LED4);
+    }
+  }
 	
 	//if ((*htim).Instance==TIM4)
 	//		BSP_LED_Toggle(LED4);
