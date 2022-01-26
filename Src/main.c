@@ -158,10 +158,9 @@ int main(void)
 
 	
 	
-  /* Configure LED3 and LED4 */
-  BSP_LED_Init(LED3);
- 
-  BSP_LED_On(LED3);   
+  /* Configure LED3 and LED4 */ 
+  BSP_LED_Init(LED4);
+  BSP_LED_On(LED4);
 	   
 	
 	TIM3_Config();
@@ -417,7 +416,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)   //see  stm32fxx_ha
 																															//for timer 3 , Timer 3 use update event initerrupt
 {
 	if ((*htim).Instance==TIM3)    //since only one timer, this line is actually not needed
-		BSP_LED_Toggle(LED3);
+		BSP_LED_Toggle(LED4);
 	
 	//if ((*htim).Instance==TIM4)
 	//		BSP_LED_Toggle(LED4);
