@@ -54,7 +54,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-extern TIM_HandleTypeDef    Tim3_Handle, Tim4_Handle;
+extern TIM_HandleTypeDef    Tim2_Handle, Tim4_Handle;
 
 
 
@@ -180,11 +180,9 @@ void EXTI0_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(KEY_BUTTON_PIN); // defined as GPIO_PIN_0 in _discovery.h
 }
 
-
-
-void TIM3_IRQHandler(void)
+void TIM2_IRQHandler(void)
 {
-  HAL_TIM_IRQHandler(&Tim3_Handle);
+  HAL_TIM_IRQHandler(&Tim2_Handle);
 }
 
 void TIM4_IRQHandler(void)
